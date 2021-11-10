@@ -66,7 +66,11 @@ private def prepareInternal(String credential) {
       loadRepo(credential)
       updateDB(credential)
     } else {
-      initDevFromSource(credential)
+       // *Каратаев Олег - Загружаем конфигурацию в уже существующую базу, которую предварительно создали ранее.
+      compile(credential)  // сборка конфигурации из текстовых файлов и загрузка конфигурации
+      updateDB(credential) // обновление конфигурации.   
+      //initDevFromSource(credential)
+      // *
     }
   } else {
     initDevWithTemplate(credential)
