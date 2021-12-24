@@ -1,0 +1,16 @@
+{
+    "agent": "windows && yard",
+    "notification": {
+        "mode": "SLACK",
+        "slack": {
+            "channelName": "#yard_build"
+        }
+    },
+    "stages": {
+        "yard": true
+    },
+    "yard": {
+        "appName": "SSL31",
+        "auth": "RELEASE_1C_AUTH"
+    }
+}
