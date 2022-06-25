@@ -42,7 +42,7 @@
 ```groovy
 @Library('usher2') _
 
-startPipeline('tools/pipeline/gitsync.json')
+repoSyncPipeline('tools/pipeline/gitsync.json')
 ```
 
 ![image-20210810132241700](/resources/images/pipe_gitsync.png)
@@ -52,7 +52,7 @@ startPipeline('tools/pipeline/gitsync.json')
 ```groovy
 @Library('usher2') _
 
-startPipeline('tools/pipeline/ci.json')
+buildPipeline('tools/pipeline/ci.json')
 ```
 
 ![image-20210810132219338](/resources/images/pipe_ci.png)

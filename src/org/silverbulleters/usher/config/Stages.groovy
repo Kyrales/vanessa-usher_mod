@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -15,8 +15,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Stages {
-  static final EMPTY = createEmptyStages()
-
   @JsonPropertyDescription("Выгрузить историю хранилища 1С с помощью утилиты `gitsync`")
   boolean gitsync = false
 
@@ -25,6 +23,12 @@ class Stages {
 
   @JsonPropertyDescription("Подготовить информационную базу")
   boolean prepareBase = false
+
+  @JsonPropertyDescription("Запустить выполнение произвольных внешних обработок 1с")
+  boolean runExternal = false
+
+  @JsonPropertyDescription("Проверить возможность применимости расширений")
+  boolean checkExtensions = false
 
   @JsonPropertyDescription("Проверить конфигурацию с помощью синтакс-проверки")
   boolean syntaxCheck = false
@@ -46,10 +50,4 @@ class Stages {
 
   @JsonPropertyDescription("Запустить загрузку и обработку релизов конфигураций 1С")
   boolean yard = false
-
-  @NonCPS
-  private static Stages createEmptyStages() {
-    return new Stages()
-  }
-
 }

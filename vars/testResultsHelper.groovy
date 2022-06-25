@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -21,9 +21,9 @@ void archive(PipelineConfiguration config, stageOptional, BaseTestingState state
     deleteDir()
   }
 
-  dir(config.getJunitPath()) {
+  dir(config.junitPath) {
     def name = UUID.randomUUID().toString()
-    state.stashes.put(name, config.getJunitPath())
+    state.stashes.put(name, config.junitPath)
     stash includes: "*", name: name
     deleteDir()
   }

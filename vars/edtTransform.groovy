@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -19,9 +19,9 @@ EdtTransformOptional optionals
  * Трансформировать исходники EDT формата в XML
  * @param config конфигурацию
  */
-void call(PipelineConfiguration config) {
+void call(PipelineConfiguration config, EdtTransformOptional optionals) {
   this.config = config
-  optionals = config.edtTransformOptional
+  this.optionals = optionals
 
   def workspace = pwd()
   removeDir(optionals.outPath)

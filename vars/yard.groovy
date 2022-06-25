@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -18,12 +18,13 @@ YardOptional stageOptional
  * Запустить yard для работы с релизами 1С
  * @param config
  */
-void call(PipelineConfiguration config) {
+void call(PipelineConfiguration config, YardOptional stageOptional) {
   this.config = config
-  this.stageOptional = config.yardOptional
+  this.stageOptional = stageOptional
 
-  if (credentialHelper.authIsPresent(stageOptional.auth) && credentialHelper.exist(stageOptional.auth)) {
-    withCredentials([usernamePassword(credentialsId: stageOptional.auth, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+  def auth = stageOptional.auth
+  if (credentialHelper.authIsPresent(auth)) {
+    withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
       withEnv(["YARD_RELEASES_USER=${USERNAME}", "YARD_RELEASES_PWD=${PASSWORD}"]) {
         yardInternal()
       }

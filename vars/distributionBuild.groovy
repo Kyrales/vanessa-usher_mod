@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -24,10 +24,10 @@ BuildOptional stageOptional
  * @param config конфигурацию
  * @param state состояние конвейера
  */
-void call(PipelineConfiguration config, PipelineState state) {
+void call(PipelineConfiguration config, BuildOptional stageOptional, PipelineState state) {
   this.config = config
   this.state = state
-  this.stageOptional = config.buildOptional
+  this.stageOptional = stageOptional
 
   infobaseHelper.unpackInfobase(config: config, state: state)
 
@@ -47,7 +47,7 @@ void call(PipelineConfiguration config, PipelineState state) {
 
 private void runBuild() {
   def auth = config.defaultInfobase.auth
-  if (credentialHelper.authIsPresent(auth) && credentialHelper.exist(auth)) {
+  if (credentialHelper.authIsPresent(auth)) {
     withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
       def credential = credentialHelper.getCustomAuth("-db-user", "-db-pwd")
       runBuildInternal(credential)

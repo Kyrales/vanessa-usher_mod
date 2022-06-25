@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -47,7 +47,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { edtTransform(config) }
+          script { edtTransform(config, config.edtTransformOptional) }
         }
       }
 
@@ -58,7 +58,29 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { prepareInfobase(config, state) }
+          script { prepareInfobase(config, config.prepareBaseOptional, state) }
+        }
+      }
+
+      stage('Run external') {
+        when { expression { config.stages.runExternal } }
+        options {
+          timeout(time: config.runExternal.timeout, unit: TimeUnit.MINUTES)
+        }
+
+        steps {
+          script { runExternalDataProcessors(config, config.runExternal, state) }
+        }
+      }
+
+      stage('Check Extensions') {
+        when { expression { config.stages.checkExtensions } }
+        options {
+          timeout(time: config.checkExtensionsOptional.timeout, unit: TimeUnit.MINUTES)
+        }
+
+        steps {
+          script { checkExtensions(config, config.checkExtensionsOptional, state) }
         }
       }
 
@@ -69,7 +91,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { syntaxCheck(config, state) }
+          script { syntaxCheck(config, config.syntaxCheckOptional, state) }
         }
       }
 
@@ -86,7 +108,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { sonarAnalyze(config) }
+          script { sonarAnalyze(config, config.sonarQubeOptional) }
         }
       }
 
@@ -97,7 +119,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { smokeTesting(config, state) }
+          script { smokeTesting(config, config.smokeOptional, state) }
         }
       }
 
@@ -108,7 +130,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { unitTesting(config, state) }
+          script { unitTesting(config, config.tddOptional, state) }
         }
       }
 
@@ -119,7 +141,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { bddTesting(config, state) }
+          script { bddTesting(config, config.bddOptional, state) }
         }
       }
 
@@ -130,7 +152,7 @@ void call(String pathToConfig, String nodeForRead = '') {
         }
 
         steps {
-          script { distributionBuild(config, state) }
+          script { distributionBuild(config, config.buildOptional, state) }
         }
       }
 

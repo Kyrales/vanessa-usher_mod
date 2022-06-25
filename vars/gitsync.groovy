@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -19,20 +19,20 @@ GitsyncOptional stageOptional
  * Запустить синхронизацию хранилища 1С и проекта git
  * @param config конфигурацию
  */
-void call(PipelineConfiguration config) {
+void call(PipelineConfiguration config, GitsyncOptional stageOptional) {
   this.config = config
-  this.stageOptional = config.gitsyncOptional
+  this.stageOptional = stageOptional
 
   syncInternal()
 }
 
 private void syncInternal() {
   def auth = config.defaultInfobase.auth
-  if (credentialHelper.authIsPresent(auth) && credentialHelper.exist(auth)) {
-    withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+  if (credentialHelper.authIsPresent(auth)) {
+    withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')]) {
       syncInternalWithRepoAuth(credentialHelper.getAuthString())
-      return
     }
+    return
   }
 
   syncInternalWithRepoAuth()
@@ -40,7 +40,7 @@ private void syncInternal() {
 
 private void syncInternalWithRepoAuth(String credential = '') {
   def authStorage = stageOptional.auth
-  if (credentialHelper.authIsPresent(authStorage) && credentialHelper.exist(authStorage)) {
+  if (credentialHelper.authIsPresent(authStorage)) {
     withCredentials([usernamePassword(credentialsId: authStorage, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
       runSync(credential, credentialHelper.getAuthRepoString())
     }

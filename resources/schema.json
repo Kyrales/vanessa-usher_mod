@@ -26,17 +26,17 @@
     },
     "debug" : {
       "type" : "boolean",
-      "description" : "Режим отладки"
+      "description" : "Режим включения отладочных логов конвейера"
     },
     "notification" : {
       "type" : "object",
       "id" : "urn:jsonschema:org:silverbulleters:usher:config:additional:NotificationOptional",
-      "description" : "Настройки уведомлений",
+      "description" : "Настройка отправки уведомлений",
       "properties" : {
         "mode" : {
           "type" : "string",
           "description" : "Режим уведомлений",
-          "enum" : [ "NO_USE", "EMAIL", "SLACK" ]
+          "enum" : [ "NO_USE", "EMAIL", "SLACK", "TELEGRAM" ]
         },
         "email" : {
           "type" : "string",
@@ -45,9 +45,20 @@
         "slack" : {
           "type" : "object",
           "id" : "urn:jsonschema:org:silverbulleters:usher:config:additional:NotificationOptional:SlackSetting",
-          "description" : "Настройки уведомлений в Slack",
+          "description" : "Настройка уведомлений в Slack",
           "properties" : {
             "channelName" : {
+              "type" : "string",
+              "description" : "Канал уведомлений"
+            }
+          }
+        },
+        "telegram" : {
+          "type" : "object",
+          "id" : "urn:jsonschema:org:silverbulleters:usher:config:additional:NotificationOptional:TelegramSetting",
+          "description" : "Настройка уведомлений в Telegram",
+          "properties" : {
+            "chatId" : {
               "type" : "string",
               "description" : "Канал уведомлений"
             }
@@ -65,7 +76,7 @@
     },
     "timeout" : {
       "type" : "integer",
-      "description" : "Общий таймаут на время работы pipeline"
+      "description" : "Общий таймаут на время работы конвейера"
     },
     "defaultInfobase" : {
       "type" : "object",
@@ -78,7 +89,7 @@
         },
         "auth" : {
           "type" : "string",
-          "description" : "Id секрета Jenkins для авторизации в информационной базе"
+          "description" : "Идентификатор секрета Jenkins для авторизации в информационной базе"
         }
       }
     },
@@ -98,6 +109,14 @@
         "prepareBase" : {
           "type" : "boolean",
           "description" : "Подготовить информационную базу"
+        },
+        "runExternal" : {
+          "type" : "boolean",
+          "description" : "Запустить выполнение произвольных внешних обработок 1с"
+        },
+        "checkExtensions" : {
+          "type" : "boolean",
+          "description" : "Проверить возможность применимости расширений"
         },
         "syntaxCheck" : {
           "type" : "boolean",
@@ -136,7 +155,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "configPath" : {
           "type" : "string",
@@ -163,7 +182,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "edt" : {
           "type" : "string",
@@ -190,7 +209,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "sourcePath" : {
           "type" : "string",
@@ -203,13 +222,16 @@
         "repo" : {
           "type" : "object",
           "id" : "urn:jsonschema:org:silverbulleters:usher:config:additional:Repo",
-          "description" : "Настройки подключения к хранилище конфигурации 1С",
+          "description" : "Настройки подключения к хранилищу конфигурации 1С",
           "properties" : {
             "path" : {
               "type" : "string"
             },
             "auth" : {
               "type" : "string"
+            },
+            "empty" : {
+              "type" : "boolean"
             }
           }
         },
@@ -233,6 +255,71 @@
         }
       }
     },
+    "runExternal" : {
+      "type" : "object",
+      "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:RunExternalDataProcessorsOptional",
+      "description" : "Настройки этапап выполнения произвольных внешних обработок 1с",
+      "properties" : {
+        "timeout" : {
+          "type" : "integer",
+          "description" : "Таймаут времени работы этапа'"
+        },
+        "vrunnerAdditionals" : {
+          "type" : "array",
+          "description" : "Массив из пары vrunnercommand и vrunnerexecute",
+          "items" : {
+            "type" : "object",
+            "id" : "urn:jsonschema:org:silverbulleters:usher:config:additional:VrunnerAdditional",
+            "properties" : {
+              "vRunnerExecute" : {
+                "type" : "string",
+                "description" : "Имя файла внешней обработки 1с для запуска в предприятии."
+              },
+              "vRunnerCommand" : {
+                "type" : "string",
+                "description" : "\n    Cтрока, передаваемая в ПараметрыЗапуска.\n    Если параметр в обработку передавать не нужно, указывается пустая строка.\n    Пример: \"ПараметрЗапуска1ДляОбработки1;ПараметраЗапуска2ДляОбработки1;\",\n   "
+              }
+            }
+          }
+        },
+        "pathEpf" : {
+          "type" : "string",
+          "description" : "Путь к каталогу с обработками, по умолчанию ./tools/epf/"
+        },
+        "settings" : {
+          "type" : "string",
+          "description" : "Путь к файлу настроек Vanessa-runner в формате json. По умолчанию ./tools/JSON/vRunnerExternalOptions.JSON"
+        },
+        "allurePath" : {
+          "type" : "string",
+          "description" : "Путь к каталогу выгрузки отчета в формате Allure"
+        },
+        "junitPath" : {
+          "type" : "string",
+          "description" : "Путь к файлу выгрузки отчета в формате jUnit"
+        }
+      }
+    },
+    "checkExtensions" : {
+      "type" : "object",
+      "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:CheckExtensionsOptional",
+      "description" : "Настройки этапа применимости расширения для использования в конкретной информационной базе конфигурации 1С",
+      "properties" : {
+        "timeout" : {
+          "type" : "integer",
+          "description" : "Таймаут времени работы этапа'"
+        },
+        "repo" : {
+          "type" : "object",
+          "$ref" : "urn:jsonschema:org:silverbulleters:usher:config:additional:Repo",
+          "description" : "Настройки подключения к хранилищу конфигурации 1С"
+        },
+        "extensions" : {
+          "type" : "string",
+          "description" : "Выполнить проверку для указанного расширения с учетом всех ранее загружаемых расширений. Если имя расширения не указано, то проверяются все расширения в порядке загрузки."
+        }
+      }
+    },
     "syntaxCheck" : {
       "type" : "object",
       "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:SyntaxCheckOptional",
@@ -240,7 +327,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "allurePath" : {
           "type" : "string",
@@ -260,7 +347,7 @@
         },
         "mode" : {
           "type" : "array",
-          "description" : "Список параметров проверок",
+          "description" : "Список параметров проверки",
           "items" : {
             "type" : "string"
           }
@@ -278,7 +365,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "xddConfig" : {
           "type" : "string",
@@ -286,7 +373,7 @@
         },
         "testPath" : {
           "type" : "string",
-          "description" : "Путь к каталогу или к файлу с тестами"
+          "description" : "Путь к каталогу / к файлу с тестами, или название подсистемы"
         },
         "allurePath" : {
           "type" : "string",
@@ -295,6 +382,10 @@
         "junitPath" : {
           "type" : "string",
           "description" : "Путь к файлу выгрузки отчета в формате jUnit"
+        },
+        "pathXUnit" : {
+          "type" : "string",
+          "description" : "Путь к внешней обработке xddTestRunner.epf, по умолчанию ищу в пакете vanessa-add"
         }
       }
     },
@@ -305,7 +396,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "xddConfig" : {
           "type" : "string",
@@ -322,6 +413,10 @@
         "junitPath" : {
           "type" : "string",
           "description" : "Путь к файлу выгрузки отчета в формате jUnit"
+        },
+        "pathXUnit" : {
+          "type" : "string",
+          "description" : "Путь к внешней обработке xddTestRunner.epf, по умолчанию ищу в пакете vanessa-add"
         }
       }
     },
@@ -332,11 +427,19 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "allurePath" : {
           "type" : "string",
           "description" : "Путь к каталогу выгрузки отчета в формате Allure. Например, `./out/bddallure`"
+        },
+        "pathVanessa" : {
+          "type" : "string",
+          "description" : "Путь к внешней обработке, по умолчанию <OneScript>/lib/add/bddRunner.epf"
+        },
+        "vanessasettings" : {
+          "type" : "string",
+          "description" : "Путь к файлу настроек фреймворка тестирования ./tools/JSON/vanessaConf.json"
         }
       }
     },
@@ -347,7 +450,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "agent" : {
           "type" : "string",
@@ -355,11 +458,11 @@
         },
         "toolId" : {
           "type" : "string",
-          "description" : "Id утилиты sonar-scanner (глобальные инструменты Jenkins)"
+          "description" : "Идентификатор утилиты sonar-scanner (глобальные инструменты Jenkins)"
         },
         "serverId" : {
           "type" : "string",
-          "description" : "Id настроек сервера SonarQube"
+          "description" : "Идентификатор настроек подключения к серверу SonarQube"
         },
         "debug" : {
           "type" : "boolean",
@@ -378,7 +481,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "distPath" : {
           "type" : "string",
@@ -386,7 +489,7 @@
         },
         "errorIfJobStatusOfFailure" : {
           "type" : "boolean",
-          "description" : "Прерывать этап если статус задачи равен FAILURE"
+          "description" : "Прерывать этап если статус сборки равен FAILURE"
         }
       }
     },
@@ -397,7 +500,7 @@
       "properties" : {
         "timeout" : {
           "type" : "integer",
-          "description" : "Таймаут времени работы таймаута"
+          "description" : "Таймаут времени работы этапа'"
         },
         "appName" : {
           "type" : "string",
@@ -413,7 +516,7 @@
         },
         "auth" : {
           "type" : "string",
-          "description" : "Секрет для авторизации на сайте releases.1c.ru"
+          "description" : "Идентификатор секрета для авторизации на сайте releases.1c.ru"
         },
         "workspacePath" : {
           "type" : "string",
@@ -425,7 +528,7 @@
         },
         "debug" : {
           "type" : "boolean",
-          "description" : "Режим дебага yard"
+          "description" : "Режим включения отладочных логов yard"
         }
       }
     }

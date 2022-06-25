@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -24,10 +24,10 @@ BddOptional stageOptional
  * @param config конфигурация
  * @param state состояние конвейера
  */
-void call(PipelineConfiguration config, PipelineState state) {
+void call(PipelineConfiguration config, BddOptional stageOptional, PipelineState state) {
   this.config = config
   this.state = state
-  this.stageOptional = config.bddOptional
+  this.stageOptional = stageOptional
 
   infobaseHelper.unpackInfobase(config: config, state: state)
 
@@ -43,8 +43,8 @@ void call(PipelineConfiguration config, PipelineState state) {
 
 private def testing() {
   def auth = config.defaultInfobase.auth
-  if (credentialHelper.authIsPresent(auth) && credentialHelper.exist(auth)) {
-    withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+  if (credentialHelper.authIsPresent(auth)) {
+    withCredentials([usernamePassword(credentialsId: auth, usernameVariable: 'DBUSERNAME', passwordVariable: 'DBPASSWORD')]) {
       def credential = credentialHelper.getAuthString()
       bddTesting(credential)
     }

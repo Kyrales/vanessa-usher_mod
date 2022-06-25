@@ -1,6 +1,6 @@
 /*
  * Vanessa-Usher
- * Copyright (C) 2019-2021 SilverBulleters, LLC - All Rights Reserved.
+ * Copyright (C) 2019-2022 SilverBulleters, LLC - All Rights Reserved.
  * Unauthorized copying of this file in any way is strictly prohibited.
  * Proprietary and confidential.
  */
@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class NotificationOptional {
-  static final NotificationOptional EMPTY = new NotificationOptional()
-
   @JsonPropertyDescription("Режим уведомлений")
   NotificationMode mode = NotificationMode.NO_USE
 
@@ -23,13 +21,20 @@ class NotificationOptional {
   String email = "test@localhost"
 
   @JsonPropertyDescription("Настройка уведомлений в Slack")
-  SlackSetting slack = SlackSetting.EMPTY
+  SlackSetting slack = new SlackSetting()
 
+  @JsonPropertyDescription("Настройка уведомлений в Telegram")
+  TelegramSetting telegram = new TelegramSetting()
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static class SlackSetting {
-    static final SlackSetting EMPTY = new SlackSetting()
-
     @JsonPropertyDescription("Канал уведомлений")
     String channelName = "#build"
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static class TelegramSetting {
+    @JsonPropertyDescription("Канал уведомлений")
+    String chatId = "1234567890"
+  }
 }
