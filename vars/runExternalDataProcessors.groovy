@@ -35,9 +35,10 @@ void call(PipelineConfiguration config, RunExternalDataProcessorsOptional stageO
         testing()
     }
 
-    catchError(message: 'Ошибка во время архивации отчетов о тестировании', buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        testResultsHelper.packTestResults(config, stageOptional, state.runExternal)
-    }
+    // *Каратаев Олег - Ошибка при упаковке результата
+    //catchError(message: 'Ошибка во время архивации отчетов о тестировании', buildResult: 'FAILURE', stageResult: 'FAILURE') {
+    //    testResultsHelper.packTestResults(config, stageOptional, state.runExternal)
+    //}
 
 }
 
