@@ -23,6 +23,10 @@ class ConfigurationReaderTest {
     assertThat(config.isDebug()).isFalse()
     assertThat(config.getTimeout()).isEqualTo(100)
     checkStages(config.getStages())
+    // *Каратаев Олег
+    assertThat(config.getOK_command()).isEqualTo("ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;")
+    assertThat(config.getOK_execute()).isEqualTo('$runnerRoot/epf/ЗакрытьПредприятие.epf')
+    // *
   }
 
   private static void checkStages(Stages stages) {

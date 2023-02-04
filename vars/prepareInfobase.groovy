@@ -49,6 +49,35 @@ private void prepareBase() {
 }
 
 private void prepareBaseInternal(String credential = '') {
+  
+  // *Каратаев Олег
+  if (stageOptional.OK_JustRun == true) {
+    migrate(credential)
+
+    if (stageOptional.OK_PushEpf == true) {
+      // Декомпилируем обработки из внешнего пути в папку проекта
+      def command = [
+      "vrunner",
+      "decompileepf",
+      stageOptional.OK_OutEpfPath,
+      stageOptional.OK_InExt_epf
+      ].join(" ")
+      
+      cmdRun(command)      
+      
+      // Пушим декомпилированные обработки на ГитЛаб
+      def command1 = "git add ."
+      cmdRun(command1)
+
+      def command2 = "git commit -m \"External Data new\" | exit 0"         
+      cmdRun(command2)
+      
+      def command3 = "git push"
+      cmdRun(command3)
+    }
+    return
+  }
+  // *
 
   if (stageOptional.template.isEmpty()) {
     if (stageOptional.repo.isEmpty()) {

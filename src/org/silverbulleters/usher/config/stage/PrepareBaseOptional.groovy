@@ -28,6 +28,14 @@ class PrepareBaseOptional extends BaseOptional {
   @JsonPropertyDescription("Список расширений конфигурации 1С. Используется для обновления базы")
   ExtensionSource[] extensions = []
 
+  // *Каратаев Олег 
+  @JsonPropertyDescription("Режим только запуска - vrunner run")
+  boolean OK_JustRun = false
+  boolean OK_PushEpf = false
+  String OK_InExt_epf = "./src/ext_epf"
+  String OK_OutEpfPath = "//knfmp.net/shares/1cconfigstorage/DevOps/ZUP/epf"
+  //
+
   PrepareBaseOptional() {
     name = "Prepare base"
     id = 'prepare-base'

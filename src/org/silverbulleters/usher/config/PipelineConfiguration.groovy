@@ -110,5 +110,11 @@ class PipelineConfiguration implements Serializable {
   @JsonPropertyDescription("Настройки этапа загрузки и обработки релизов 1С")
   @JsonProperty("yard")
   YardOptional yardOptional = new YardOptional()
-
+  
+  // *Каратаев Олег
+  @JsonPropertyDescription("Команда запуска 1С")
+  String OK_command = "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;"
+  @JsonPropertyDescription("Обработка epf запуска с 1С")
+  String OK_execute = '$runnerRoot/epf/ЗакрытьПредприятие.epf'
+  // *
 }

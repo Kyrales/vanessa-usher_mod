@@ -170,9 +170,12 @@ class VRunner {
         "--ibconnection", Common.getConnectionString(config),
         "--settings", config.vrunnerConfig,
         "--v8version", config.v8Version,
-        "--command", "'ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;'",
-        "--execute", '"$runnerRoot/epf/ЗакрытьПредприятие.epf"'
-    ]
+        // *Каратаев Олег 
+        "--command", config.OK_command,
+        "--execute", config.OK_execute
+        //"--command", "'ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;'",
+        //"--execute", '"$runnerRoot/epf/ЗакрытьПредприятие.epf"'   
+       ]
     return command.join(" ")
   }
 
