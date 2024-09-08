@@ -25,6 +25,7 @@ import org.silverbulleters.usher.config.stage.SonarQubeOptional
 import org.silverbulleters.usher.config.stage.SyntaxCheckOptional
 import org.silverbulleters.usher.config.stage.TddOptional
 import org.silverbulleters.usher.config.stage.YardOptional
+import org.silverbulleters.usher.config.stage.yaxunitOptional
 
 /**
  * Настройки pipeline
@@ -116,5 +117,11 @@ class PipelineConfiguration implements Serializable {
   String OK_command = "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;"
   @JsonPropertyDescription("Обработка epf запуска с 1С")
   String OK_execute = '$runnerRoot/epf/ЗакрытьПредприятие.epf'
+  
+  // yaxunit
+  @JsonPropertyDescription("Настройки этапа yaxunit ")
+  @JsonProperty("yaxunit")
+  yaxunitOptional yaxunitOptional = new yaxunitOptional()
+  
   // *
 }

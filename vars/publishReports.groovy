@@ -60,7 +60,13 @@ private def publish() {
     addToReport(reports, config.bddOptional.allurePath)
     unpackResult(state.bdd.stashes)
   }
-
+  // *Каратаев Олег
+   if (config.stages.yaxunit) {
+    addToReport(reports, config.yaxunitOptional.allurePath)
+    unpackResult(state.yaxunit.stashes)
+  } 
+  //* 
+  
   junit allowEmptyResults: true, skipPublishingChecks: true, skipMarkingBuildUnstable: true, testResults: '**/out/junit/*.xml'
   allure includeProperties: false, jdk: '', results: reports
 

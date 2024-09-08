@@ -133,6 +133,19 @@ void call(String pathToConfig, String nodeForRead = '') {
           script { unitTesting(config, config.tddOptional, state) }
         }
       }
+      
+      // *Каратаев Олег
+      stage('yaxunit') {
+        when { expression { config.stages.yaxunit } }
+        options {
+          timeout(time: config.yaxunitOptional.timeout, unit: TimeUnit.MINUTES)
+        }
+
+        steps {
+          script { yaxunitTesting(config, config.yaxunitOptional, state) }
+        }
+      }
+      // *
 
       stage('BDD') {
         when { expression { config.stages.bdd } }
