@@ -41,6 +41,12 @@ class PipelineState {
   BaseTestingState tdd = new BaseTestingState()
 
   /**
+   * Состояние yaxunit тестирования
+   */
+  BaseTestingState yaxunit = new BaseTestingState()
+
+
+  /**
    * Состояние bdd тестирования
    */
   BaseTestingState bdd = new BaseTestingState()
