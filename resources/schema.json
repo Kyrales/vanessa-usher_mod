@@ -130,6 +130,10 @@
           "type" : "boolean",
           "description" : "Запустить TDD"
         },
+        "yaxunit" : {
+          "type" : "boolean",
+          "description" : "Запустить yaxunit"
+        },
         "bdd" : {
           "type" : "boolean",
           "description" : "Запустить BDD"
@@ -417,6 +421,25 @@
         "pathXUnit" : {
           "type" : "string",
           "description" : "Путь к внешней обработке xddTestRunner.epf, по умолчанию ищу в пакете vanessa-add"
+        }
+      }
+    },
+    "yaxunit" : {
+      "type" : "object",
+      "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:yaxunitOptional",
+      "description" : "Настройки этапа yaxunit)",
+      "properties" : {
+        "timeout" : {
+          "type" : "integer",
+          "description" : "Таймаут времени работы этапа'"
+        },
+        "yaxunitsettings" : {
+          "type" : "string",
+          "description" : "Путь к конфигурационному файлу yaxunit"
+        },
+        "allurePath" : {
+          "type" : "string",
+          "description" : "Путь к каталогу выгрузки отчета в формате Allure"
         }
       }
     },
