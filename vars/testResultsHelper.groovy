@@ -41,6 +41,25 @@ void packTestResults(PipelineConfiguration config, stageOptional, BaseTestingSta
 }
 
 /**
+ * Упаковать результат о тестировании только в Allure формате
+ * @param config конфигурация
+ * @param stageOptional настройка шага
+ * @param state состояние шага
+ */
+void archiveAllure(PipelineConfiguration config, stageOptional, BaseTestingState state) {
+  
+  allureHelper.addCategories(stageOptional.getName(), stageOptional.getAllurePath())
+
+  dir(stageOptional.getAllurePath()) {
+    def name = UUID.randomUUID().toString()
+    state.stashes.put(name, stageOptional.getAllurePath())
+    stash includes: '*', name: name
+    deleteDir()
+  }
+
+}
+
+/**
  * Архивировать результаты тестирования
  * @param result
  */

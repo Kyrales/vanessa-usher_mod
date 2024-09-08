@@ -36,7 +36,7 @@ void call(PipelineConfiguration config, YaxunitOptional stageOptional, PipelineS
   }
 
   catchError(message: 'Ошибка во время архивации отчетов yaxunit о тестировании', buildResult: 'FAILURE', stageResult: 'FAILURE') {
-    testResultsHelper.packTestResults(config, stageOptional, state.yaxunit)
+    testResultsHelper.archiveAllure(config, stageOptional, state.yaxunit)
   }
 
 }
