@@ -33,7 +33,7 @@ class PrepareBaseOptional extends BaseOptional {
   boolean OK_JustRun = false
   boolean OK_PushEpf = false
   String OK_InExt_epf = "./src/ext_epf"
-  String OK_OutEpfPath = "//knfmp.net/shares/1cconfigstorage/DevOps/ZUP/epf"
+  String OK_OutEpfPath = "//net/shares/1cconfigstorage/DevOps/ZUP/epf"
   //
 
   PrepareBaseOptional() {
