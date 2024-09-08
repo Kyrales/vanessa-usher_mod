@@ -13,15 +13,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription
  * Настройки этапа yaxunit
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-class yaxunitOptional extends BaseOptional {
+class YaxunitOptional extends BaseOptional {
   @JsonPropertyDescription("Путь к каталогу выгрузки отчета в формате Allure. Например, `./out/yaxunitallure`")
   String allurePath = "./out/yaxunitallure"
 
   @JsonPropertyDescription("Путь к файлу настроек фреймворка тестирования ./tools/JSON/yaxunit.json")
   String yaxunitsettings = './tools/JSON/yaxunit.json'
 
-  yaxunitOptional() {
-    name = 'yaxunit'
+  YaxunitOptional() {
+    name = 'Yaxunit'
     id = 'yaxunit'
     timeout = 100
   }

@@ -15,7 +15,7 @@ import org.silverbulleters.usher.config.stage.PrepareBaseOptional
 import org.silverbulleters.usher.config.stage.SmokeOptional
 import org.silverbulleters.usher.config.stage.SyntaxCheckOptional
 import org.silverbulleters.usher.config.stage.TddOptional
-import org.silverbulleters.usher.config.stage.yaxunitOptional
+import org.silverbulleters.usher.config.stage.YaxunitOptional
 import org.silverbulleters.usher.util.Common
 
 /**
@@ -364,7 +364,7 @@ class VRunner {
    * @param optional настройки
    * @return строка команды
    */
-  static def runYaxunit(PipelineConfiguration config, yaxunitOptional optional) {
+  static def runYaxunit(PipelineConfiguration config, YaxunitOptional optional) {
     def command = [
             "vrunner",
             "run",

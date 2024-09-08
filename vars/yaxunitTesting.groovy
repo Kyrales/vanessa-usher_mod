@@ -6,7 +6,7 @@
  */
 import groovy.transform.Field
 import org.silverbulleters.usher.config.PipelineConfiguration
-import org.silverbulleters.usher.config.stage.yaxunitOptional
+import org.silverbulleters.usher.config.stage.YaxunitOptional
 import org.silverbulleters.usher.state.PipelineState
 import org.silverbulleters.usher.wrapper.VRunner
 
@@ -17,14 +17,14 @@ PipelineConfiguration config
 PipelineState state
 
 @Field
-yaxunitOptional stageOptional
+YaxunitOptional stageOptional
 
 /**
  * Выполнить yaxunit тестирование
  * @param config конфигурация
  * @param state состояние конвейера
  */
-void call(PipelineConfiguration config, yaxunitOptional stageOptional, PipelineState state) {
+void call(PipelineConfiguration config, YaxunitOptional stageOptional, PipelineState state) {
   this.config = config
   this.state = state
   this.stageOptional = stageOptional

@@ -426,7 +426,7 @@
     },
     "yaxunit" : {
       "type" : "object",
-      "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:yaxunitOptional",
+      "id" : "urn:jsonschema:org:silverbulleters:usher:config:stage:YaxunitOptional",
       "description" : "Настройки этапа yaxunit)",
       "properties" : {
         "timeout" : {
