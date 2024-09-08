@@ -119,7 +119,7 @@ class PipelineConfiguration implements Serializable {
   String OK_execute = '$runnerRoot/epf/ЗакрытьПредприятие.epf'
   
   // yaxunit
-  @JsonPropertyDescription("Настройки этапа yaxunit ")
+  @JsonPropertyDescription("Настройки этапа yaxunit")
   @JsonProperty("yaxunit")
   yaxunitOptional yaxunitOptional = new yaxunitOptional()
   
