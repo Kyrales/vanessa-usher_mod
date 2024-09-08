@@ -38,7 +38,11 @@ class Stages {
 
   @JsonPropertyDescription("Запустить TDD")
   boolean tdd = false
-
+  
+  //* Каратаев Олег
+  @JsonPropertyDescription("Запустить yaxunit")
+  boolean yaxunit = false
+  
   @JsonPropertyDescription("Запустить BDD")
   boolean bdd = false
 
