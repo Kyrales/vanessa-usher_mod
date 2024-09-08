@@ -370,9 +370,9 @@ class VRunner {
             "run",
             "%credentialID%",
             "--ibconnection", Common.getConnectionString(config),
-            "--settings", config.vrunnerConfig,
+            //"--settings", config.vrunnerConfig,
             "--v8version", config.v8Version,
-            "--command \'RunUnitTests=${optional.yaxunitsettings}\'"
+            "--command \"RunUnitTests=${optional.yaxunitsettings}\""
     ]
 
     return  command.join(" ")
